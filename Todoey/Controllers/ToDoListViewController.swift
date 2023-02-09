@@ -138,27 +138,22 @@ class ToDoListViewController: UITableViewController {
 
 extension ToDoListViewController: UISearchBarDelegate {
     
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//
-//        let request = NSFetchRequest<Item>(entityName: "Item")
-//        guard let saveText = searchBar.text else { return }
-//
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", saveText)
-//        request.predicate = predicate
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//
-//        loadItems(with: request)
-//    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "title", ascending: true)
+        
+        tableView.reloadData()
+    }
     
-    // MARK: - refresh table if remove all characters in searchbar
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            loadItems()
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
-//
-//        }
-//    }
+   //  MARK: - refresh table if remove all characters in searchbar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+
+        }
+    }
  
 }
